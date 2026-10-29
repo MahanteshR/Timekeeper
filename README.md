@@ -1,10 +1,10 @@
-# Timekeeper 0.7.1
+# Timekeeper 0.8.0-explore.1
 
 Android app for daily app allowances, usage intervals, and cooldowns. Includes a screen-time dashboard, strict mode, optional emergency access, and local usage-history reconciliation.
 
 ## Review handoff
 
-The owner accepted the 0.7.1 UI and confirmed on 29 October 2026 that the cooldown/reboot/recovery integration gate is complete. See [device validation status](docs/DEVICE_VALIDATION.md). Historical validation notes below describe their original build dates; this update supersedes their pending-gate status. Shizuku is still not implemented. The next step is its optional non-root exploration, with Android compatibility beta afterward. Security/release review is being handed to Claude separately.
+The owner accepted the 0.7.1 UI and confirmed on 29 October 2026 that the cooldown/reboot/recovery integration gate is complete. See [device validation status](docs/DEVICE_VALIDATION.md). Historical validation notes below describe their original build dates; this update supersedes their pending-gate status. This exploration branch adds a manual, opt-in Shizuku lab. It has not passed phone testing and is not wired into automatic timer enforcement. Android compatibility beta follows this exploration. Security/release review is being handed to Claude separately.
 
 For an independent review, clone this repository, read [CLAUDE.md](CLAUDE.md), and run the build/tests below. The handoff includes the code map, product rules, known platform limitations, previous review findings and current validation evidence. No signing keys, generated APKs, usage/backup data, screenshots, SDK paths or machine caches belong in this repository.
 
@@ -21,6 +21,10 @@ On Windows, use `gradlew.bat`. Android Studio can open the repository root; sele
 If a previous incremental Kotlin compilation reports missing shared UI declarations, retry with `-Pkotlin.incremental=false`.
 
 The source archive excludes SDK files, caches, build outputs, machine-specific settings, screenshots, and signing keys. Updating an existing installed APK requires the same signing key.
+
+## Experimental Shizuku lab
+
+Settings → Shizuku lab evaluates a 10-second app suspension, stop-app versus force-stop, 30-second privileged task observation, and verified recovery. It accepts wireless-debugging shell mode only. Existing timers continue using Accessibility. See [setup, recovery limits and device test matrix](docs/SHIZUKU_LAB.md) before testing. Suspension can persist if Shizuku stops or the device reboots; restart Shizuku and reconnect to recover. No Shizuku phone-test result is claimed.
 
 ## 0.7.1 UI refinement
 
@@ -67,7 +71,7 @@ The manual backup feature does not change the existing Android automatic-backup 
 
 ## Roadmap
 
-The agreed order is backup/restore, optional non-root Shizuku exploration, then an Android compatibility beta. Banking-app compatibility is out of scope. Security/release review is separate. Shizuku is not implemented and must not be enabled before cooldown, reboot, and recovery tests pass. Reliability testing continues with releases; paid-tier exploration follows the product groundwork.
+The agreed order is backup/restore, optional non-root Shizuku exploration, then an Android compatibility beta. Banking-app compatibility is out of scope. Security/release review is separate. The existing cooldown/reboot/recovery gate was confirmed complete by the owner. The experimental Shizuku lab has its own pending device-evaluation matrix before any production integration. Reliability testing continues with releases; paid-tier exploration follows the product groundwork.
 
 ## 0.5.2 changes
 
