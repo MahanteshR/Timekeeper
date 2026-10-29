@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Timekeeper</string>
+    <string name="service_summary">Track selected apps and show their cooldown screen.</string>
+    <string name="service_description">Timekeeper uses window events and window package names to detect which app is active and display a blocking screen when your allowance ends. Android grants broad accessibility access for this. Timekeeper does not read text, messages, passwords, or screen images, does not perform gestures on your behalf, and has no internet permission. Only app names, rules, and usage totals are stored locally. You can disable the service in Settings.</string>
+</resources>
