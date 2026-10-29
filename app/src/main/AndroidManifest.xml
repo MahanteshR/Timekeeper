@@ -4,6 +4,7 @@
     <!-- Special access is granted explicitly in system Settings, not by a runtime permission dialog. -->
     <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
     <queries>
+        <package android:name="moe.shizuku.privileged.api" />
         <intent>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
@@ -20,6 +21,13 @@
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/Theme.Timekeeper">
+        <provider
+            android:name=".shizuku.ShellOnlyShizukuProvider"
+            android:authorities="${applicationId}.shizuku"
+            android:multiprocess="false"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
         <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

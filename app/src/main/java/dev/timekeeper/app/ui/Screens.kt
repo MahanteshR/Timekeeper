@@ -115,7 +115,8 @@ fun TimekeeperApp(store: TimekeeperStore) {
                             RuleEditor(store, packageName, apps.firstOrNull { it.packageName == packageName }, back,
                                 onSaved = { parents = emptyList(); screen = "home" })
                         }
-                        "settings" -> SettingsPage(store, now, back, onSetup = { navigate("setup") }, onBackup = { navigate("backup") })
+                        "settings" -> SettingsPage(store, now, back, onSetup = { navigate("setup") }, onBackup = { navigate("backup") }, onShizuku = { navigate("shizuku") })
+                        "shizuku" -> ShizukuLabPage(store, apps, back)
                         "backup" -> BackupPage(store, apps.map { it.packageName }.toSet(), appsLoaded,
                             onBack = back, onSetup = { navigate("setup") })
                         "setup" -> SetupPage(store, now, back)
@@ -520,7 +521,7 @@ private fun RepeatDaysDialog(initial: Int, enabled: Boolean, resetLabel: String,
 }
 
 @Composable
-private fun SettingsPage(store: TimekeeperStore, now: Stamp, onBack: () -> Unit, onSetup: () -> Unit, onBackup: () -> Unit) {
+private fun SettingsPage(store: TimekeeperStore, now: Stamp, onBack: () -> Unit, onSetup: () -> Unit, onBackup: () -> Unit, onShizuku: () -> Unit) {
     val snapshot by store.snapshots.collectAsState()
     val p = snapshot.preferences
     val c = LocalOneUi.current
@@ -586,8 +587,10 @@ private fun SettingsPage(store: TimekeeperStore, now: Stamp, onBack: () -> Unit,
         Group {
             SettingsRow("Setup and permissions", onClick = onSetup)
             GroupDivider()
-            SettingsRow("Your data", description = "No account, ads, analytics, or direct internet access. Optional timer backups go only to the folder you choose. A cloud storage provider may sync that folder.")
+            SettingsRow("Your data", description = "No account, ads, analytics, or network requests. Optional timer backups go only to the folder you choose. A cloud storage provider may sync that folder.")
         }
+        SectionLabel("Experimental")
+        Group { SettingsRow("Shizuku lab", description = "Evaluate non-root app suspension, stopping and task observation.", onClick = onShizuku) }
         val versionName = remember(context) {
             runCatching { context.packageManager.getPackageInfo(context.packageName, 0).versionName }.getOrNull() ?: "Unknown"
         }
